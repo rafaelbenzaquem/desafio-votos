@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-class CadastrarPautaControllerTest {
+class PautaCadastroControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,7 +39,7 @@ class CadastrarPautaControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(MockMvcResultMatchers.header().string("Location", "http://localhost/pautas/1"));
+                .andExpect(MockMvcResultMatchers.header().string("Location", "http://localhost/pautas/2"));
 
 
     }

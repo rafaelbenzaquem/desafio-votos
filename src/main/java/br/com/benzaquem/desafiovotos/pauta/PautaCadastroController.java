@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping
 @AllArgsConstructor
-public class CadastrarPautaController {
+public class PautaCadastroController {
 
     private PautaRepository pautaRepository;
 

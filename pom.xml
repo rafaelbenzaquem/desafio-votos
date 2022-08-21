@@ -19,15 +19,17 @@
 
         <sonar.java.coveragePuling>jacoco</sonar.java.coveragePuling>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-        <sonar.coverage.exclusions>
-            **/*
-        </sonar.coverage.exclusions>
+        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.covarage.exclusions>
+            **/br.com.benzaquem.desafiovotos.pauta.Pauta.java
+            **/br.com.benzaquem.desafiovotos.sessao.Sessao.java
+        </sonar.covarage.exclusions>
         <sonar.language>java</sonar.language>
 
         <splunk.url>https://splunk.jfrog.io/splunk/ext-releases-local</splunk.url>
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <splunk-library-javalogging.version>1.8.0</splunk-library-javalogging.version>
+        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
     <repositories>
         <repository>
@@ -140,45 +142,32 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
+                <version>${jacoco-maven-plugin.version}</version>
                 <configuration>
+                    <destFile>${sonar.jacoco.reportPath}</destFile>
+                    <append>true</append>
                     <excludes>
-                        <exclude>**/*</exclude>
+                        <exclude>**/br.com.benzaquem.desafiovotos.pauta.Pauta.java</exclude>
+                        <exclude>**/br.com.benzaquem.desafiovotos.sessao.Sessao.java</exclude>
                     </excludes>
-                    <rules>
-                        <rule>
-                            <element>BUNDLE</element>
-                            <limits>
-                                <limit>
-                                    <counter>LINE</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimun>00%</minimun>
-                                </limit>
-                            </limits>
-                        </rule>
-                    </rules>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>jacoco-initialize</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>jacoco-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
