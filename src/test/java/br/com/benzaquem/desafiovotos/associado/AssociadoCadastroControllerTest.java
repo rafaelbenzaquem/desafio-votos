@@ -1,4 +1,5 @@
-package br.com.benzaquem.desafiovotos.sessao;
+package br.com.benzaquem.desafiovotos.associado;
+
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,36 +20,34 @@ import java.net.URI;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-class SessaoVotacaoControllerTest {
-
+class AssociadoCadastroControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
     @BeforeEach
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @SneakyThrows
     @Test
-    void abrirSessaoVotacaoTempoDefaultComSucessoRetorna201() {
-
+    void cadastrarAssociadoComSucessoRetorna201(){
         var requestContent = "{\n" +
-                "\"nome\":\"Sessao de votacao extraordinária para Investimento\",\n" +
-                "\"id_pauta\":1\n" +
+                "\"nome\":\"rafael\",\n" +
+                "\"cpf\" :\"84115667818\"\n" +
                 "}";
 
-        var uri = new URI("/sessoes");
+        var uri = new URI("/associados");
 
-        mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestContent))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(uri)
+                        .content(requestContent)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().exists("Location"))
-                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/sessoes/2"));
+                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/associados/1"));
 
     }
 
