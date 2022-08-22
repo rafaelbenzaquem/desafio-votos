@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.associado;
+package br.com.benzaquem.desafiovotos.voto;
 
 
 import lombok.SneakyThrows;
@@ -20,7 +20,7 @@ import java.net.URI;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-class AssociadoCadastroControllerTest {
+class VotoControllerTest {
 
     private MockMvc mockMvc;
 
@@ -28,26 +28,33 @@ class AssociadoCadastroControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @SneakyThrows
     @Test
-    void cadastrarAssociadoComSucessoRetorna201(){
+    void votarPautaSessaoAbertaClienteValidoComSucessoRetorna200() {
         var requestContent = "{" +
-                "\"nome\":\"rafael\"," +
-                "\"cpf\" :\"84115667818\"" +
+                "\"id_pauta\":1," +
+                "\"id_associado\":1," +
+                "\"opcao\":\"SIM\"" +
                 "}";
 
-        var uri = new URI("/associados");
+        var responseContent = "{" +
+                "\"mensagem\":\"Seu voto foi computado com sucesso.\"" +
+                "}";
+
+        var uri = URI.create("/votos");
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(uri)
-                        .content(requestContent)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/associados/2"));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestContent))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().string(responseContent));
+
 
     }
 

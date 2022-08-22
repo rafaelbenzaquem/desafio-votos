@@ -48,7 +48,7 @@ class SessaoVotacaoControllerTest {
                         .content(requestContent))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.header().exists("Location"))
-                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/sessoes/2"));
+                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/sessoes/3"));
 
     }
 

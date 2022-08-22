@@ -18,12 +18,6 @@ public class SessaoRequest {
     public SessaoRequest() {
     }
 
-    public SessaoRequest(String nome, Long duracaoEmMinutos, Long idPauta) {
-        this.nome = nome;
-        this.duracaoEmMinutos = duracaoEmMinutos;
-        this.idPauta = idPauta;
-    }
-
     public String getNome() {
         return nome;
     }

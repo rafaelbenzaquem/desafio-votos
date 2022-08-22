@@ -1,6 +1,7 @@
 package br.com.benzaquem.desafiovotos.sessao;
 
 import br.com.benzaquem.desafiovotos.pauta.Pauta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +20,9 @@ public class Sessao {
 
     private LocalDateTime fim;
 
+    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "pauta_id")
     private Pauta pauta;
 
     public Sessao() {
