@@ -14,12 +14,13 @@ public class Voto {
     @EmbeddedId
     private VotoPk id;
 
-    private String opcao;
+    @Enumerated(EnumType.STRING)
+    private OpcaoVoto opcao;
 
     public Voto() {
     }
 
-    private Voto(VotoPk id, String opcao) {
+    private Voto(VotoPk id, OpcaoVoto opcao) {
         this.id = id;
         this.opcao = opcao;
     }
@@ -28,11 +29,11 @@ public class Voto {
         return id;
     }
 
-    public String getOpcao() {
+    public OpcaoVoto getOpcao() {
         return opcao;
     }
 
-    public static Voto of(Associado associado, Sessao sessao, String opcao){
+    public static Voto of(Associado associado, Sessao sessao, OpcaoVoto opcao){
         return new Voto(VotoPk.of(associado,sessao),opcao);
     }
 }

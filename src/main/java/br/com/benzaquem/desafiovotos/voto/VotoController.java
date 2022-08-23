@@ -29,24 +29,34 @@ public class VotoController {
     private VotoRepository votoRepository;
 
 
-    @PostMapping("/votos")
+    @PostMapping(value = "/votos", produces = "application/json;charset=UTF-8")
     public ResponseEntity<VotoResponse> votarPauta(@RequestBody VotoRequest votoRequest) {
-        var instant = LocalDateTime.now();
-        var optAssociado = associadoRepository.findById(votoRequest.getIdAssociado());
-        var optPauta = pautaRepository.findById(votoRequest.getIdPauta());
-        var pauta = optPauta.get();
+        var horaDoVoto = LocalDateTime.now();
+        var idAssociado = votoRequest.getIdAssociado();
+        var idPauta = votoRequest.getIdPauta();
+        var optAssociado = associadoRepository.findById(idAssociado);
+        var optPauta = pautaRepository.findById(idPauta);
 
-        var associado = optAssociado.get();
-
-        var optSessao = sessaoVotacaoRepository.buscarUltimaSessaoAbertaPorPauta(votoRequest.getIdPauta(), instant);
-
-        if (optSessao.isPresent()) {
-            var sessao = optSessao.get();
-            votoRepository.save(votoRequest.toModel(associado, sessao));
-            return ResponseEntity.ok(new VotoResponse("Seu voto foi computado com sucesso."));
+        if (optAssociado.isPresent()) {
+            if (optPauta.isPresent()) {
+                var associado = optAssociado.get();
+                var optSessao = sessaoVotacaoRepository.buscarUltimaSessaoAbertaPorPauta(votoRequest.getIdPauta(), horaDoVoto);
+                if (optSessao.isPresent()) {
+                    if (votoRepository.findVotoByAssociadoAndPauta(idAssociado, idPauta).isPresent()) {
+                        return ResponseEntity.unprocessableEntity().body(new VotoResponse("Não é possível votar mais de uma vez na mesma pauta."));
+                    }
+                    var sessao = optSessao.get();
+                    votoRepository.save(votoRequest.toModel(associado, sessao));
+                    return ResponseEntity.ok(new VotoResponse("Seu voto foi computado com sucesso."));
+                }
+                return ResponseEntity.unprocessableEntity().body(
+                        new VotoResponse(String.format("Não foi possível processar o seu voto, por não existir sessão aberta para pauta id= %s.", idPauta)));
+            }
+            return ResponseEntity.unprocessableEntity().body(
+                    new VotoResponse(String.format("Não foi possível processar o seu voto, por não existir pauta com id = %s.", idPauta)));
         }
         return ResponseEntity.unprocessableEntity().body(
-                new VotoResponse("Não foi possível computar o seu voto, por não haver sessão aberta para pauta id=" + pauta.getId()));
+                new VotoResponse(String.format("Não existe usuário cadastrado com id = %s.", idPauta)));
     }
 
 }

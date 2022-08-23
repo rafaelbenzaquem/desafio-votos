@@ -36,7 +36,7 @@ class VotoControllerTest {
     @Test
     void votarPautaSessaoAbertaClienteValidoComSucessoRetorna200() {
         var requestContent = "{" +
-                "\"id_pauta\":1," +
+                "\"id_pauta\":2," +
                 "\"id_associado\":1," +
                 "\"opcao\":\"SIM\"" +
                 "}";
@@ -52,10 +52,36 @@ class VotoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestContent))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
                 .andExpect(MockMvcResultMatchers.content().string(responseContent));
 
 
     }
+
+    @SneakyThrows
+    @Test
+    void votarSegundaVezPautaSessaoAbertaClienteValidoComErroRetorna422(){
+        var requestContent = "{" +
+                "\"id_pauta\":1," +
+                "\"id_associado\":1," +
+                "\"opcao\":\"SIM\"" +
+                "}";
+        System.out.println(requestContent);
+        var responseContent = "{" +
+                "\"mensagem\":\"Não é possível votar mais de uma vez na mesma pauta.\"" +
+                "}";
+
+        var uri = URI.create("/votos");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestContent))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+                .andExpect(MockMvcResultMatchers.content().string(responseContent));
+    }
+
+
 
 }

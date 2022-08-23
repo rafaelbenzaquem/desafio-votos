@@ -48,7 +48,7 @@ class PautaCadastroControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(MockMvcResultMatchers.header().string("Location", "http://localhost/pautas/2"));
+                .andExpect(MockMvcResultMatchers.header().string("Location", "http://localhost/pautas/3"));
 
 
     }
