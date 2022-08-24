@@ -4,10 +4,11 @@ import br.com.benzaquem.desafiovotos.pauta.Pauta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class Sessao {
+public class Sessao implements Serializable {
 
 
     @Id
