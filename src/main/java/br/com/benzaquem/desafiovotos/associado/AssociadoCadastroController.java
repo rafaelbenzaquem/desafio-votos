@@ -20,12 +20,12 @@ public class AssociadoCadastroController {
 
     @PostMapping("/associados")
     public ResponseEntity<Void> cadastrarAssociado(@RequestBody AssociadoResquest associadoResquest) {
-
+        log.info("Iniciando cadastro de associado, request = {}", associadoResquest);
         var associado = associadoResquest.toModel();
         associado = associadoRepository.save(associado);
+        log.info("Associado cadastrado com sucesso, associado = {}",associado);
         var uri = ServletUriComponentsBuilder.fromCurrentRequestUri().
                 path("/{id}").buildAndExpand(associado.getId()).toUri();
-
         return ResponseEntity.created(uri).build();
     }
 

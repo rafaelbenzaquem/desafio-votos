@@ -6,6 +6,7 @@ import br.com.benzaquem.desafiovotos.sessao.Sessao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Voto {
@@ -33,7 +34,27 @@ public class Voto {
         return opcao;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Voto voto = (Voto) o;
+        return Objects.equals(id, voto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public static Voto of(Associado associado, Sessao sessao, OpcaoVoto opcao){
         return new Voto(VotoPk.of(associado,sessao),opcao);
+    }
+
+    @Override
+    public String toString() {
+        return "Voto{"+ id +
+                ", opcao=" + opcao +
+                '}';
     }
 }

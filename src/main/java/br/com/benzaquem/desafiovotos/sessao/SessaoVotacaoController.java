@@ -21,17 +21,18 @@ public class SessaoVotacaoController {
 
     @PostMapping
     public ResponseEntity<?> abrirSessaoVotacao(@RequestBody SessaoRequest sessaoRequest) {
+        log.info("Iniciando uma sessão de votação, request = {}", sessaoRequest);
         var idPauta = sessaoRequest.getIdPauta();
         var optPauta = pautaRepository.findById(idPauta);
 
         if (optPauta.isPresent()) {
-
             var sessao = sessaoRequest.toModel(optPauta.get());
             sessao = sessaoVotacaoRepository.save(sessao);
+            log.info("Sessão iniciada com sucesso, sessão = {}",sessao);
             var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }
-        log.warn("Pauta id = {} não existe", idPauta);
+        log.warn("Não foi possível iniciar sessão , não foi possível encotrar pauta id = {}", idPauta);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Pauta id = %s não existe", idPauta));
     }
 

@@ -37,4 +37,13 @@ public class SessaoRequest {
         var dataFinal = dataInicial.plusMinutes(duracaoEmMinutos);
         return new Sessao(null, nome, dataInicial, dataFinal, pauta);
     }
+
+    @Override
+    public String toString() {
+        return "SessaoRequest{" +
+                "nome='" + nome + '\'' +
+                ", duracaoEmMinutos=" + duracaoEmMinutos +
+                ", idPauta=" + idPauta +
+                '}';
+    }
 }

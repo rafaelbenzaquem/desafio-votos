@@ -61,4 +61,10 @@ public class VotoPk implements Serializable {
     public static VotoPk of(Associado associado, Sessao sessao) {
         return new VotoPk(associado, sessao);
     }
+
+    @Override
+    public String toString() {
+        return "idAssociado=" + associado.getId() +
+                ", idSessao=" + sessao.getId();
+    }
 }

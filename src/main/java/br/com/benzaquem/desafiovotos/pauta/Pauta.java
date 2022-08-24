@@ -4,6 +4,7 @@ import br.com.benzaquem.desafiovotos.sessao.Sessao;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Pauta {
@@ -30,5 +31,27 @@ public class Pauta {
 
     public String getNome() {
         return nome;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pauta pauta = (Pauta) o;
+        return Objects.equals(id, pauta.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Pauta{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sessoes=" + sessoes +
+                '}';
     }
 }
