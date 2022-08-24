@@ -56,7 +56,7 @@ public class VotoController {
                     new VotoResponse(String.format("Não foi possível processar o seu voto, por não existir pauta com id = %s.", idPauta)));
         }
         return ResponseEntity.unprocessableEntity().body(
-                new VotoResponse(String.format("Não existe usuário cadastrado com id = %s.", idPauta)));
+                new VotoResponse(String.format("Não existe usuário cadastrado com id = %s.", idAssociado)));
     }
 
 }
