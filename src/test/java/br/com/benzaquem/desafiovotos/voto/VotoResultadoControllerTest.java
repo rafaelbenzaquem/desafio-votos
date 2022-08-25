@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.net.URI;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 class VotoResultadoControllerTest {
 

@@ -68,7 +68,6 @@ insert into voto(associado_id, sessao_id,opcao) values (1,2,'NAO');
 insert into voto(associado_id, sessao_id,opcao) values (2,2,'SIM');
 insert into voto(associado_id, sessao_id,opcao) values (3,2,'NAO');
 
-insert into voto(associado_id, sessao_id,opcao) values (1,3,'SIM');
 insert into voto(associado_id, sessao_id,opcao) values (2,3,'SIM');
 insert into voto(associado_id, sessao_id,opcao) values (3,3,'NAO');
 

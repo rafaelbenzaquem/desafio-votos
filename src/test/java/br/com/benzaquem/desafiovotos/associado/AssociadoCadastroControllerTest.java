@@ -47,7 +47,7 @@ class AssociadoCadastroControllerTest {
                         .content(requestContent)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/associados/3"));
+                .andExpect(MockMvcResultMatchers.header().string("Location","http://localhost/associados/4"));
 
     }
 
