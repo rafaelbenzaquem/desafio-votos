@@ -16,7 +16,7 @@ public class VotoResultadoController {
     @Autowired
     private VotoResultadoService votoResultadoService;
 
-    @GetMapping("/voto-resultado/pautas/{id_pauta}")
+    @GetMapping(value = "/voto-resultado/pautas/{id_pauta}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<VotoResultadoResponse> calcularResultadoVotacao(@PathVariable("id_pauta") Long idPauta) {
 
         log.info("Apurando votos para a pauta id = {}", idPauta);

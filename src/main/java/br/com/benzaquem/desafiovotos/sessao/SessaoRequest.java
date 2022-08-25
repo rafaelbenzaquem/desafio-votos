@@ -3,14 +3,18 @@ package br.com.benzaquem.desafiovotos.sessao;
 import br.com.benzaquem.desafiovotos.pauta.Pauta;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class SessaoRequest {
 
+    @NotBlank(message = "Campo não pode ser vazio ou em branco.")
     private String nome;
 
+    @Min(value = 1,message = "Duração mínima de uma sessão é 1 minuto.")
     @JsonProperty(value = "duracao")
-    private Long duracaoEmMinutos;
+    private Long duracao;
 
     @JsonProperty(value = "id_pauta")
     private Long idPauta;
@@ -23,8 +27,8 @@ public class SessaoRequest {
     }
 
 
-    public Long getDuracaoEmMinutos() {
-        return duracaoEmMinutos;
+    public Long getDuracao() {
+        return duracao;
     }
 
     public Long getIdPauta() {
@@ -32,9 +36,9 @@ public class SessaoRequest {
     }
 
     public Sessao toModel(Pauta pauta) {
-        duracaoEmMinutos = duracaoEmMinutos == null ? 1 : duracaoEmMinutos;
+        duracao = duracao == null ? 1 : duracao;
         var dataInicial = LocalDateTime.now();
-        var dataFinal = dataInicial.plusMinutes(duracaoEmMinutos);
+        var dataFinal = dataInicial.plusMinutes(duracao);
         return new Sessao(null, nome, dataInicial, dataFinal, pauta);
     }
 
@@ -42,7 +46,7 @@ public class SessaoRequest {
     public String toString() {
         return "SessaoRequest{" +
                 "nome='" + nome + '\'' +
-                ", duracaoEmMinutos=" + duracaoEmMinutos +
+                ", duracao=" + duracao +
                 ", idPauta=" + idPauta +
                 '}';
     }

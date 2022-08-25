@@ -1,18 +1,8 @@
 package br.com.benzaquem.desafiovotos.pauta;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.NotBlank;
 
-public class PautaRequest {
-
-    private final String nome;
-
-    public PautaRequest(@JsonProperty(value = "nome") String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
+public record PautaRequest(@NotBlank(message = "Campo não pode ser vazio ou em branco.") String nome) {
 
     public Pauta toModel() {
         return new Pauta(null, nome);

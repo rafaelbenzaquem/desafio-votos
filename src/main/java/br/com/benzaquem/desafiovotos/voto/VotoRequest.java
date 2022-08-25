@@ -1,7 +1,6 @@
 package br.com.benzaquem.desafiovotos.voto;
 
 import br.com.benzaquem.desafiovotos.associado.Associado;
-import br.com.benzaquem.desafiovotos.pauta.Pauta;
 import br.com.benzaquem.desafiovotos.sessao.Sessao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

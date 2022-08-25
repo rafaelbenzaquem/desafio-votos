@@ -1,11 +1,17 @@
 package br.com.benzaquem.desafiovotos.associado;
 
-import static br.com.benzaquem.desafiovotos.util.OfuscaDadosUtil.*;
+import org.hibernate.validator.constraints.br.CPF;
+
+import javax.validation.constraints.NotBlank;
+
+import static br.com.benzaquem.desafiovotos.commons.util.OfuscaDadosUtil.*;
 
 public class AssociadoResquest {
 
+    @NotBlank(message = "Campo não pode ser vazio ou em branco.")
     private String nome;
 
+    @CPF(message = "Documento informado inválido.")
     private String cpf;
 
     public AssociadoResquest() {
@@ -19,7 +25,7 @@ public class AssociadoResquest {
         return cpf;
     }
 
-    public Associado toModel(){
+    public Associado toModel() {
         return new Associado(null, nome, cpf);
     }
 

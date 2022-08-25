@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.util;
+package br.com.benzaquem.desafiovotos.commons.util;
 
 public class OfuscaDadosUtil {
 

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @Slf4j
 @AllArgsConstructor
 @RestController
@@ -19,8 +21,8 @@ public class SessaoVotacaoController {
 
     private PautaRepository pautaRepository;
 
-    @PostMapping
-    public ResponseEntity<?> abrirSessaoVotacao(@RequestBody SessaoRequest sessaoRequest) {
+    @PostMapping(produces = "application/json;charset=UTF-8")
+    public ResponseEntity<?> abrirSessaoVotacao(@RequestBody @Valid SessaoRequest sessaoRequest) {
         log.info("Iniciando uma sessão de votação, request = {}", sessaoRequest);
         var idPauta = sessaoRequest.getIdPauta();
         var optPauta = pautaRepository.findById(idPauta);

@@ -1,7 +1,7 @@
 package br.com.benzaquem.desafiovotos.associado;
 
 
-import static  br.com.benzaquem.desafiovotos.util.OfuscaDadosUtil.*;
+import static br.com.benzaquem.desafiovotos.commons.util.OfuscaDadosUtil.*;
 
 import javax.persistence.*;
 import java.io.Serializable;

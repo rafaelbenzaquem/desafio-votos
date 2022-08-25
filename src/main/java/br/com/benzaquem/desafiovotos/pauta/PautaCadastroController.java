@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping
@@ -19,8 +21,8 @@ public class PautaCadastroController {
     private PautaRepository pautaRepository;
 
 
-    @PostMapping("/pautas")
-    public ResponseEntity<Void> cadastrarPauta(@RequestBody PautaRequest pautaRequest) {
+    @PostMapping(value = "/pautas", produces = "application/json;charset=UTF-8")
+    public ResponseEntity<Void> cadastrarPauta(@RequestBody @Valid PautaRequest pautaRequest) {
         log.info("Iniciando cadastro de uma pauta, request = {}", pautaRequest);
         var pauta = pautaRequest.toModel();
         pauta = pautaRepository.save(pauta);
