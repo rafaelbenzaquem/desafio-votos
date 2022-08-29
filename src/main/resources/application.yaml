@@ -13,3 +13,7 @@ spring:
     url: ${BANCO_URL:jdbc:mysql://localhost:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED}
     username: ${BANCO_USER:root}
     password: ${BANCO_PASSWORD:123456}
+
+analise:
+  voto:
+    url: https://user-info.herokuapp.com/users

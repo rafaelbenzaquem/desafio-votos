@@ -1,0 +1,1 @@
+insert into associado(nome,cpf) values ('teste1','75124377062');

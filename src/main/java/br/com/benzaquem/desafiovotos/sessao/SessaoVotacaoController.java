@@ -30,7 +30,7 @@ public class SessaoVotacaoController {
         if (optPauta.isPresent()) {
             var sessao = sessaoRequest.toModel(optPauta.get());
             sessao = sessaoVotacaoRepository.save(sessao);
-            log.info("Sessão iniciada com sucesso, sessão = {}",sessao);
+            log.info("Sessão iniciada com sucesso, sessão id = {}",sessao.getId());
             var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }

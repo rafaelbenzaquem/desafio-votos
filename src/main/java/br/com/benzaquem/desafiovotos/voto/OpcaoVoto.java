@@ -1,19 +1,25 @@
 package br.com.benzaquem.desafiovotos.voto;
 
+import br.com.benzaquem.desafiovotos.voto.excep.OpcaoVotoInvalidoException;
+
 public enum OpcaoVoto {
-    SIM("SIM"),NAO("NAO");
+    SIM("SIM"), NAO("NAO");
 
-    private String value;
+    private final String value;
 
-    private OpcaoVoto(String value) {
+    OpcaoVoto(String value) {
         this.value = value;
     }
 
-    public static OpcaoVoto of(String value){
-        if(value.equalsIgnoreCase("NAO")||value.equalsIgnoreCase("NÃO"))
+    public String getValue() {
+        return value;
+    }
+
+    public static OpcaoVoto of(String valor) {
+        if (valor.equalsIgnoreCase("NAO") || valor.equalsIgnoreCase("NÃO"))
             return OpcaoVoto.NAO;
-        if(value.equalsIgnoreCase("SIM"))
+        if (valor.equalsIgnoreCase("SIM"))
             return OpcaoVoto.SIM;
-            throw new IllegalArgumentException("Opção de voto inválida");
+        throw new OpcaoVotoInvalidoException("Opção de voto inválida!", valor);
     }
 }

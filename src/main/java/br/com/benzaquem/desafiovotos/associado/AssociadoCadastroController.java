@@ -27,8 +27,8 @@ public class AssociadoCadastroController {
     @PostMapping(value = "/associados", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Void> cadastrarAssociado(@RequestBody @Valid AssociadoResquest associadoResquest) {
         log.info("Iniciando cadastro de associado, request = {}", associadoResquest);
-        boolean existsCpf = associadoRepository.existsAssociadoByCpf(associadoResquest.getCpf());
 
+        boolean existsCpf = associadoRepository.existsAssociadoByCpf(associadoResquest.getCpf());
         if (existsCpf) {
             log.warn("Documento já cadastrado, N° = " + ofuscaCpf(associadoResquest.getCpf()));
             throw new DocumentoDuplicadoException("Documento já cadastrado, N° = " + associadoResquest.getCpf());

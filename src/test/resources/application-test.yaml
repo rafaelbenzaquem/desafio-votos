@@ -1,13 +1,15 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:proposta-test
+    url: jdbc:h2:mem:desafio-test
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+
+    defer-datasource-initialization: true

@@ -1,0 +1,35 @@
+package br.com.benzaquem.desafiovotos.commons.validadores;
+
+import br.com.benzaquem.desafiovotos.commons.validadores.annotation.ExistDB;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.List;
+
+public class ExistDBValidator implements ConstraintValidator<ExistDB, Object> {
+
+
+    private Class<?> domainClass;
+    private String fieldName;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    public void initialize(ExistDB constraint) {
+        this.domainClass = constraint.domainClass();
+        this.fieldName = constraint.fieldName();
+    }
+
+
+    @Override
+    public boolean isValid(Object valor, ConstraintValidatorContext constraintValidatorContext) {
+        Query q = em.createQuery("select d from " + domainClass.getSimpleName() + " d where " + fieldName + "=:valor");
+        q.setParameter("valor", valor);
+        List<?> list = q.getResultList();
+        return list.isEmpty();
+    }
+}
