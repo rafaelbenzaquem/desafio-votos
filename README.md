@@ -1,4 +1,8 @@
 ##
+![](https://img.shields.io/github/issues/rafaelbenzaquem/desafio-votos)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/rafaelbenzaquem/desafio-votos)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/rafaelbenzaquem/desafio-votos)
+![](https://img.shields.io/github/stars/rafaelbenzaquem/desafio-votos)
 
 ## :speech_balloon:O que há neste documento
 1. [Missão deste projeto](./README.md#hammermissão-deste-projeto)
