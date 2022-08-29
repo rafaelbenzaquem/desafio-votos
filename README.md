@@ -2,7 +2,7 @@
 
 ## :speech_balloon:O que há neste documento
 1. [Missão deste projeto](./README.md#hammermissão-deste-projeto)
-2. [Estrutura do projeto](./README.md#hammermissão-deste-projeto)
+2. [Estrutura do projeto](./README.md#rocketestrutura-do-projeto)
 3. [Executando testes unitários](./README.md#executando-testes-unitários)
 4. [Executando testes de integração](./README.md#executando-testes-de-integração)
 5. [Executando todos os testes](./README.md#executando-todos-os-testes)
@@ -112,7 +112,7 @@ mvnw.cmd spring-boot:run
 
 Após o 'clean install' para acessar o relatório de cobertura de testes, abra no navegador o arquivo  './target/site/jacoco/index.html'.
 
-![img.png](img.png)
+![img.png](img/jacoco.png)
 
 ou acesse..
 - [Relatório de testes com Jacoco ](http://localhost:63342/desafio-votos/target/site/jacoco/index.html?_ijt=rq92eosmcj0gmg1fb0n01svl01&_ij_reload=RELOAD_ON_SAVE)
