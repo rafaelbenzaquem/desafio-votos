@@ -119,8 +119,8 @@ Após o 'clean install' para acessar o relatório de cobertura de testes, abra n
 ![img.png](img/jacoco.png)
 
 ou acesse..
-- [Relatório de testes com Jacoco ](http://localhost:63342/desafio-votos/target/site/jacoco/index.html?_ijt=rq92eosmcj0gmg1fb0n01svl01&_ij_reload=RELOAD_ON_SAVE)
->  http://localhost:63342/desafio-votos/target/site/jacoco/index.html?_ijt=rq92eosmcj0gmg1fb0n01svl01&_ij_reload=RELOAD_ON_SAVE
+- [Relatório de testes com Jacoco ](http://localhost:63342/desafio-votos/target/site/jacoco/index.html)
+>  http://localhost:63342/desafio-votos/target/site/jacoco/index.html
 
 ## :mag_right:Endpoints disponíveis
 

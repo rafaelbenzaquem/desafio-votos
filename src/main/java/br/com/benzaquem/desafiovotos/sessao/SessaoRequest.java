@@ -17,9 +17,6 @@ public class SessaoRequest {
     @JsonProperty(value = "duracao")
     private Long duracao;
 
-    @NotExistDB(domainClass = Pauta.class,
-            fieldName = "id",
-    message = "Não existe uma pauta cadastrada no banco de dados ")
     @JsonProperty(value = "id_pauta")
     private Long idPauta;
 

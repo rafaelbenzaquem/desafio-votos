@@ -11,7 +11,7 @@ class OpcaoVotoTest {
     @Test
     void enumOpcaoVotoValida() {
         assertAll("Criacao da Enum 'OpcaoVoto'",
-                () -> assertEquals(OpcaoVoto.SIM, OpcaoVoto.of("sim")),
+                () -> assertEquals(OpcaoVoto.SIM.getValue(), OpcaoVoto.of("sim").getValue()),
                 () -> assertEquals(OpcaoVoto.SIM, OpcaoVoto.of("sIM")),
                 () -> assertEquals(OpcaoVoto.NAO, OpcaoVoto.of("nÃO")),
                 () -> assertEquals(OpcaoVoto.NAO, OpcaoVoto.of("nao"))

@@ -21,7 +21,7 @@ public class Voto {
     public Voto() {
     }
 
-    private Voto(VotoPk id, OpcaoVoto opcao) {
+    public Voto(VotoPk id, OpcaoVoto opcao) {
         this.id = id;
         this.opcao = opcao;
     }

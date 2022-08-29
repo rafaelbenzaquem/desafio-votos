@@ -2,6 +2,8 @@ package br.com.benzaquem.desafiovotos.voto.model;
 
 import br.com.benzaquem.desafiovotos.associado.Associado;
 import br.com.benzaquem.desafiovotos.sessao.Sessao;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -9,6 +11,8 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Embeddable
 public class VotoPk implements Serializable {
 
@@ -23,24 +27,8 @@ public class VotoPk implements Serializable {
     public VotoPk() {
     }
 
-    private VotoPk(Associado associado, Sessao sessao) {
+    public VotoPk(Associado associado, Sessao sessao) {
         this.associado = associado;
-        this.sessao = sessao;
-    }
-
-    public Associado getAssociado() {
-        return associado;
-    }
-
-    public void setAssociado(Associado associado) {
-        this.associado = associado;
-    }
-
-    public Sessao getSessao() {
-        return sessao;
-    }
-
-    public void setSessao(Sessao sessao) {
         this.sessao = sessao;
     }
 

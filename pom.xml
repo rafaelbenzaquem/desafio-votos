@@ -23,6 +23,9 @@
         <sonar.covarage.exclusions>
             **/br.com.benzaquem.desafiovotos.pauta.Pauta.java
             **/br.com.benzaquem.desafiovotos.sessao.Sessao.java
+            **/br.com.benzaquem.desafiovotos.associado.Associado.java
+            **/br.com.benzaquem.desafiovotos.voto.model.Voto.java
+            **/br.com.benzaquem.desafiovotos.voto.model.VotoPk.java
         </sonar.covarage.exclusions>
         <sonar.language>java</sonar.language>
 
@@ -154,6 +157,9 @@
                     <excludes>
                         <exclude>**/br.com.benzaquem.desafiovotos.pauta.Pauta.java</exclude>
                         <exclude>**/br.com.benzaquem.desafiovotos.sessao.Sessao.java</exclude>
+                        <exclude>**/br.com.benzaquem.desafiovotos.associado.Associado.java</exclude>
+                        <exclude>**/br.com.benzaquem.desafiovotos.voto.model.Voto.java</exclude>
+                        <exclude>**/br.com.benzaquem.desafiovotos.voto.model.VotoPk.java</exclude>
                     </excludes>
                 </configuration>
                 <executions>

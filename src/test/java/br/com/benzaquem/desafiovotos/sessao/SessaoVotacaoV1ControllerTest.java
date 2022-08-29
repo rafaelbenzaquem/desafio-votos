@@ -31,7 +31,7 @@ class SessaoVotacaoV1ControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
@@ -48,12 +48,34 @@ class SessaoVotacaoV1ControllerTest {
         var uri = new URI("/v1/sessoes");
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post(uri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestContent))
+                        MockMvcRequestBuilders.post(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestContent))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.header().exists("Location"))
                 .andExpect(MockMvcResultMatchers.header().string("Location", MatchesPattern.matchesPattern("http://localhost/v1/sessoes/(\\d+)")));
+
+    }
+
+    @SneakyThrows
+    @Test
+    void abrirSessaoVotacaoComPautaInexistente404() {
+
+        var requestContent = "{" +
+                "\"nome\":\"Sessao de votacao extraordinária para Investimento\"," +
+                "\"id_pauta\":11\n" +
+                "}";
+
+        var responseContent = "{\"status\":404,\"mensagem\":\"Recurso não encontrado!\",\"campos\":[{\"campo\":\"id_pauta\",\"mensagem\":\"Pauta id = 11 não existe.\"}]}";
+
+        var uri = new URI("/v1/sessoes");
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post(uri)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestContent))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().string(responseContent));
 
     }
 

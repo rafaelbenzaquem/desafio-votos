@@ -1,7 +1,9 @@
 package br.com.benzaquem.desafiovotos.voto.exceptions;
 
-public class OpcaoVotoInvalidoException extends RuntimeException {
+import lombok.Getter;
 
+@Getter
+public class OpcaoVotoInvalidoException extends RuntimeException {
 
     private final String valor;
 
@@ -10,7 +12,4 @@ public class OpcaoVotoInvalidoException extends RuntimeException {
         this.valor = valor;
     }
 
-    public String getValor() {
-        return valor;
-    }
 }

@@ -1,7 +1,7 @@
 package br.com.benzaquem.desafiovotos.sessao;
 
 
-import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemValidatorResponse;
+import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemResponseError;
 import br.com.benzaquem.desafiovotos.pauta.PautaRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Slf4j
 @AllArgsConstructor
@@ -35,7 +36,7 @@ public class SessaoVotacaoV1Controller {
                             description = "Referência para nova nova sessão  iniciada. Ex.: ./v1/sessoes/{id_associado}")),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = {@Content(mediaType = "application/json;charset=UTF-8",
-                            schema = @Schema(implementation = MensagemValidatorResponse.class))})})
+                            schema = @Schema(implementation = MensagemResponseError.class))})})
     @PostMapping(produces = "application/json;charset=UTF-8")
     public ResponseEntity<?> abrirSessaoVotacao(@RequestBody @Valid SessaoRequest sessaoRequest) {
         log.info("Iniciando uma sessão de votação, request = {}", sessaoRequest);
@@ -45,12 +46,14 @@ public class SessaoVotacaoV1Controller {
         if (optPauta.isPresent()) {
             var sessao = sessaoRequest.toModel(optPauta.get());
             sessao = sessaoVotacaoRepository.save(sessao);
-            log.info("Sessão iniciada com sucesso, sessão id = {}",sessao.getId());
+            log.info("Sessão iniciada com sucesso, sessão id = {}", sessao.getId());
             var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/v1/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }
         log.warn("Não foi possível iniciar sessão , não foi possível encotrar pauta id = {}", idPauta);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Pauta id = %s não existe", idPauta));
+        MensagemResponseError errorResponse = new MensagemResponseError(HttpStatus.NOT_FOUND.value(), "Recurso não encontrado!", new ArrayList<>());
+        errorResponse.addMensagemCampoError("id_pauta", String.format("Pauta id = %s não existe.", idPauta));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
 

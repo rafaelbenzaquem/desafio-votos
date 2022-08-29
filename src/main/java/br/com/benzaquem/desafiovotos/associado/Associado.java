@@ -1,12 +1,17 @@
 package br.com.benzaquem.desafiovotos.associado;
 
 
+import lombok.Builder;
+import lombok.Getter;
+
 import static br.com.benzaquem.desafiovotos.commons.util.OfuscaDadosUtil.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Builder
 @Entity
 public class Associado implements Serializable {
 
@@ -26,18 +31,6 @@ public class Associado implements Serializable {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getCpf() {
-        return cpf;
     }
 
     @Override
