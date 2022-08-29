@@ -110,8 +110,11 @@ no Windows
 mvnw.cmd spring-boot:run
 ```
 
-Para acessar o relatório de cobertura de testes
+Após o 'clean install' para acessar o relatório de cobertura de testes, abra no navegador o arquivo  './target/site/jacoco/index.html'.
 
+![img.png](img.png)
+
+ou acesse..
 - [Relatório de testes com Jacoco ](http://localhost:63342/desafio-votos/target/site/jacoco/index.html?_ijt=rq92eosmcj0gmg1fb0n01svl01&_ij_reload=RELOAD_ON_SAVE)
 >  http://localhost:63342/desafio-votos/target/site/jacoco/index.html?_ijt=rq92eosmcj0gmg1fb0n01svl01&_ij_reload=RELOAD_ON_SAVE
 
