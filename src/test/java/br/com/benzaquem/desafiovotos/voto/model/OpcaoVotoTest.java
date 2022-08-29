@@ -1,6 +1,7 @@
-package br.com.benzaquem.desafiovotos.voto;
+package br.com.benzaquem.desafiovotos.voto.model;
 
-import br.com.benzaquem.desafiovotos.voto.excep.OpcaoVotoInvalidoException;
+import br.com.benzaquem.desafiovotos.voto.exceptions.OpcaoVotoInvalidoException;
+import br.com.benzaquem.desafiovotos.voto.model.OpcaoVoto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

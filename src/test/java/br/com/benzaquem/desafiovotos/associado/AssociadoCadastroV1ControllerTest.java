@@ -66,7 +66,7 @@ class AssociadoCadastroV1ControllerTest {
                 "\"cpf\" :\"46960387000\"" +
                 "}";
 
-        var responseContent = "{\"campo\":\"cpf\",\"mensagem\":\"Documento já cadastrado, N° = 46960387000\"}";
+        var responseContent = "{\"status\":400,\"mensagem\":\"Erro de validação!\",\"campos\":[{\"campo\":\"cpf\",\"mensagem\":\"Documento já cadastrado, N° = 46960387000\"}]}";
 
         var uri = new URI("/v1/associados");
 

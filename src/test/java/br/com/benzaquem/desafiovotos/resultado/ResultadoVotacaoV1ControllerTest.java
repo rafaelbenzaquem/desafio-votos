@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.voto;
+package br.com.benzaquem.desafiovotos.resultado;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +21,8 @@ import java.net.URI;
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Sql("/data/voto/import_data_for_voto_resultado_controller_test_2.sql")
-class VotoResultadoV1ControllerTest {
+@Sql("/data/resultado/import_data_for_resultado_votacao_controller_test_2.sql")
+class ResultadoVotacaoV1ControllerTest {
 
     private MockMvc mockMvc;
 

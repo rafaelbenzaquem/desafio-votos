@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.voto;
+package br.com.benzaquem.desafiovotos.voto.model;
 
 
 import br.com.benzaquem.desafiovotos.associado.Associado;

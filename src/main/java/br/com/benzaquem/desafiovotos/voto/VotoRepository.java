@@ -1,5 +1,7 @@
 package br.com.benzaquem.desafiovotos.voto;
 
+import br.com.benzaquem.desafiovotos.voto.model.Voto;
+import br.com.benzaquem.desafiovotos.voto.model.VotoPk;
 import lombok.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

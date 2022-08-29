@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.voto.excep;
+package br.com.benzaquem.desafiovotos.voto.exceptions;
 
 public class OpcaoVotoInvalidoException extends RuntimeException {
 

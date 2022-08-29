@@ -1,8 +1,8 @@
-package br.com.benzaquem.desafiovotos.voto;
+package br.com.benzaquem.desafiovotos.resultado;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class VotoResultadoResponse {
+public class ResultadoVotacaoResponse {
 
     private String status;
     @JsonProperty("SIM")
@@ -10,7 +10,7 @@ public class VotoResultadoResponse {
     @JsonProperty("NAO")
     private Long quantidadeNao;
 
-    public VotoResultadoResponse() {
+    public ResultadoVotacaoResponse() {
     }
 
     public String getStatus() {
@@ -25,13 +25,13 @@ public class VotoResultadoResponse {
         return quantidadeNao;
     }
 
-    public VotoResultadoResponse(String status, Long quantidadeSim, Long quantidadeNao) {
+    public ResultadoVotacaoResponse(String status, Long quantidadeSim, Long quantidadeNao) {
         this.status = status;
         this.quantidadeSim = quantidadeSim;
         this.quantidadeNao = quantidadeNao;
     }
 
-    public static VotoResultadoResponse of(String status, long quantidadeSim, long quantidadeNao) {
-        return new VotoResultadoResponse(status,quantidadeSim,quantidadeNao);
+    public static ResultadoVotacaoResponse of(String status, long quantidadeSim, long quantidadeNao) {
+        return new ResultadoVotacaoResponse(status,quantidadeSim,quantidadeNao);
     }
 }

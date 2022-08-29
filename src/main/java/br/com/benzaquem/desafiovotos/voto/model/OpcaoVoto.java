@@ -1,6 +1,6 @@
-package br.com.benzaquem.desafiovotos.voto;
+package br.com.benzaquem.desafiovotos.voto.model;
 
-import br.com.benzaquem.desafiovotos.voto.excep.OpcaoVotoInvalidoException;
+import br.com.benzaquem.desafiovotos.voto.exceptions.OpcaoVotoInvalidoException;
 
 public enum OpcaoVoto {
     SIM("SIM"), NAO("NAO");

@@ -28,12 +28,13 @@ O projeto foi estruturado de maneira simples para facilitar o entendimento do le
 
 
 >- /desafio-votos		# raiz do projeto.
->>-	/analise	        # pacote com serviço externo de análise de cpf.
->>-	/associado	# pacote de classes para cadastro de associados.
->>-	/commons	# pacote de classes comuns a todos os domínios.
->>-	/pauta		# pacote de classes para cadastro de pautas.
->>-	/sessão		# pacote de classes para criação de sessões.
->>-	/voto		# pacotes de classes de serviços de votos e votação.
+>>- /analise	        # pacote com serviço externo de análise de cpf.
+>>- /associado	# pacote de classes para cadastro de associados.
+>>- /commons	# pacote de classes comuns a todos os domínios.
+>>- /pauta		# pacote de classes para cadastro de pautas.
+>>- /resultado  # pacotes de classes de serviços de resultado de votação
+>>- /sessão		# pacote de classes para criação de sessões.
+>>- /voto		# pacotes de classes de serviços de votos.
 
 
 ## Executando testes unitários

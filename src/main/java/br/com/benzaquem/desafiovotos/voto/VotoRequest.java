@@ -5,6 +5,8 @@ import br.com.benzaquem.desafiovotos.commons.validadores.annotation.Enum;
 import br.com.benzaquem.desafiovotos.commons.validadores.annotation.NotExistDB;
 import br.com.benzaquem.desafiovotos.pauta.Pauta;
 import br.com.benzaquem.desafiovotos.sessao.Sessao;
+import br.com.benzaquem.desafiovotos.voto.model.OpcaoVoto;
+import br.com.benzaquem.desafiovotos.voto.model.Voto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class VotoRequest {
