@@ -1,12 +1,16 @@
 package br.com.benzaquem.desafiovotos.voto;
 
 
+import br.com.benzaquem.desafiovotos.analise.AnaliseCpfExternalService;
+import br.com.benzaquem.desafiovotos.analise.AnaliseCpfResponse;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,26 +33,48 @@ class VotoV1ControllerTest {
 
     private MockMvc mockMvc;
 
+    @MockBean
+    private AnaliseCpfExternalService analiseCpfExternalService;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @SneakyThrows
     @Test
     void votarPautaSessaoAbertaClienteValidoComSucessoRetorna200() {
+
         var requestContent = "{" +
                 "\"id_pauta\":1," +
                 "\"id_associado\":2," +
                 "\"opcao\":\"SIM\"" +
                 "}";
 
-        var responseContent = "{\"mensagem\":\"Seu voto foi computado com sucesso.\"}";
+        Mockito.when(analiseCpfExternalService.solicitarAnaliseVotoPorCpf(Mockito.anyString())).thenReturn(new AnaliseCpfResponse("ABLE_TO_VOTE"));
+
+        var responseContent = "{\"status\":200,\"mensagem\":\"Seu voto foi computado com sucesso.\"}";
 
         mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    void votarPautaSessaoAbertaClienteValidoNaoHabilitadoRetorna422() {
+
+        var requestContent = "{" +
+                "\"id_pauta\":1," +
+                "\"id_associado\":2," +
+                "\"opcao\":\"SIM\"" +
+                "}";
+
+        Mockito.when(analiseCpfExternalService.solicitarAnaliseVotoPorCpf(Mockito.anyString())).thenReturn(new AnaliseCpfResponse("UNABLE_TO_VOTE"));
+
+        var responseContent = "{\"status\":422,\"mensagem\":\"O associado id = 2 não está habilitado para votar na pauta id = 1.\"}";
+
+        mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isUnprocessableEntity());
     }
 
     @SneakyThrows
@@ -60,9 +86,11 @@ class VotoV1ControllerTest {
                 "\"opcao\":\"SIM\"" +
                 "}";
 
-        var responseContent = "{" +
-                "\"mensagem\":\"Não é possível votar mais de uma vez na mesma pauta.\"" +
-                "}";
+
+        Mockito.when(analiseCpfExternalService.solicitarAnaliseVotoPorCpf(Mockito.anyString())).thenReturn(new AnaliseCpfResponse("ABLE_TO_VOTE"));
+
+
+        var responseContent = "{\"status\":400,\"mensagem\":\"Não é possível votar mais de uma vez na mesma pauta.\"}";
 
         var uri = URI.create("/votos");
 
@@ -79,9 +107,11 @@ class VotoV1ControllerTest {
                 "\"opcao\":\"SIM\"" +
                 "}";
 
-        var responseContent = "{" +
-                "\"mensagem\":\"Não foi possível processar o seu voto, por não existir sessão aberta para pauta id= 2.\"" +
-                "}";
+
+        Mockito.when(analiseCpfExternalService.solicitarAnaliseVotoPorCpf(Mockito.anyString())).thenReturn(new AnaliseCpfResponse("ABLE_TO_VOTE"));
+
+
+        var responseContent = "{\"status\":400,\"mensagem\":\"Não foi possível processar o seu voto, por não existir sessão aberta para pauta id= 2.\"}";
 
         mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isBadRequest());
     }

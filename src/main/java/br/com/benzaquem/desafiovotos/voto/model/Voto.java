@@ -6,6 +6,7 @@ import br.com.benzaquem.desafiovotos.sessao.Sessao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,9 @@ public class Voto {
 
     @Enumerated(EnumType.STRING)
     private OpcaoVoto opcao;
+
+    @Column(name = "hora_do_voto")
+    private LocalDateTime horaDoVoto;
 
     public Voto() {
     }

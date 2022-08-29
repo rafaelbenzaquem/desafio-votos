@@ -41,6 +41,6 @@ public class VotoRequest {
     }
 
     public Voto toModel(Associado associado, Sessao sessao) {
-        return Voto.of(associado, sessao, OpcaoVoto.of(opcao));
+        return Voto.of(associado, sessao, OpcaoVoto.of(getOpcao()));
     }
 }
