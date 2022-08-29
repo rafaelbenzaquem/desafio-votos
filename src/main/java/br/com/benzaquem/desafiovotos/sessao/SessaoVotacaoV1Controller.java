@@ -14,8 +14,8 @@ import javax.validation.Valid;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/sessoes")
-public class SessaoVotacaoController {
+@RequestMapping("/v1/sessoes")
+public class SessaoVotacaoV1Controller {
 
     private SessaoVotacaoRepository sessaoVotacaoRepository;
 
@@ -31,7 +31,7 @@ public class SessaoVotacaoController {
             var sessao = sessaoRequest.toModel(optPauta.get());
             sessao = sessaoVotacaoRepository.save(sessao);
             log.info("Sessão iniciada com sucesso, sessão id = {}",sessao.getId());
-            var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
+            var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/v1/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }
         log.warn("Não foi possível iniciar sessão , não foi possível encotrar pauta id = {}", idPauta);

@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping
-public class VotoResultadoController {
+public class VotoResultadoV1Controller {
 
     @Autowired
     private VotoResultadoService votoResultadoService;
 
-    @GetMapping(value = "/voto-resultado/pautas/{id_pauta}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/v1/voto-resultado/pautas/{id_pauta}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<VotoResultadoResponse> calcularResultadoVotacao(@PathVariable("id_pauta") Long idPauta) {
 
         log.info("Apurando votos para a pauta id = {}", idPauta);

@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
-@RequestMapping
-public class VotoController {
+@RequestMapping("/v1")
+public class VotoV1Controller {
 
     @Autowired
     private AssociadoRepository associadoRepository;

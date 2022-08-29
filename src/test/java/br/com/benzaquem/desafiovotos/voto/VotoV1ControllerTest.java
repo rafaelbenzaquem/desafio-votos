@@ -25,7 +25,7 @@ import java.net.URI;
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Sql({"/data/voto/import_data_for_voto_controller_test.sql"})
-class VotoControllerTest {
+class VotoV1ControllerTest {
 
     private MockMvc mockMvc;
 
@@ -116,7 +116,7 @@ class VotoControllerTest {
     }
 
     private void mockMvcVotosTest(String requestContent, String responseContent, ResultMatcher resultMatchers) throws Exception {
-        var uri = URI.create("/votos");
+        var uri = URI.create("/v1/votos");
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(uri)

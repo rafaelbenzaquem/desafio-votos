@@ -19,12 +19,12 @@ import static br.com.benzaquem.desafiovotos.commons.util.OfuscaDadosUtil.ofuscaC
 @Slf4j
 @RestController
 @RequestMapping
-public class AssociadoCadastroController {
+public class AssociadoCadastroV1Controller {
 
     @Autowired
     private AssociadoRepository associadoRepository;
 
-    @PostMapping(value = "/associados", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/v1/associados", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Void> cadastrarAssociado(@RequestBody @Valid AssociadoResquest associadoResquest) {
         log.info("Iniciando cadastro de associado, request = {}", associadoResquest);
 

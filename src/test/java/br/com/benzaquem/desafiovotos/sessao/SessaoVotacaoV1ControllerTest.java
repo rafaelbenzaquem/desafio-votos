@@ -1,4 +1,4 @@
-package br.com.benzaquem.desafiovotos.pauta;
+package br.com.benzaquem.desafiovotos.sessao;
 
 import lombok.SneakyThrows;
 import org.hamcrest.text.MatchesPattern;
@@ -10,22 +10,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URI;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class PautaCadastroControllerTest {
+class SessaoVotacaoV1ControllerTest {
 
     private MockMvc mockMvc;
 
@@ -36,24 +34,26 @@ class PautaCadastroControllerTest {
     public void setup(){
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
+
     @SneakyThrows
     @Test
-    void cadastrarPautaComSucessoRetorna201() {
+    @Sql("/data/sessao/import_data_for_sessao_votacao_controller_test.sql")
+    void abrirSessaoVotacaoTempoDefaultComSucessoRetorna201() {
 
         var requestContent = "{" +
-                "\"nome\":\"Investimentos\"" +
+                "\"nome\":\"Sessao de votacao extraordinária para Investimento\"," +
+                "\"id_pauta\":1\n" +
                 "}";
 
-        var uri = new URI("/pautas");
+        var uri = new URI("/v1/sessoes");
 
-        mockMvc.perform(post(uri)
-                        .content(requestContent)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"))
-                .andExpect(MockMvcResultMatchers.header().string("Location",
-                        MatchesPattern.matchesPattern("http://localhost/pautas/(\\d+)")));
-
+        mockMvc.perform(
+                MockMvcRequestBuilders.post(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestContent))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.header().exists("Location"))
+                .andExpect(MockMvcResultMatchers.header().string("Location", MatchesPattern.matchesPattern("http://localhost/v1/sessoes/(\\d+)")));
 
     }
 

@@ -103,11 +103,11 @@ Para acessar o relatório de cobertura de testes
 
 Antecedido por http://\<seu-host\>:8080 temos os endpoints
 
-- /associados \(POST\)
-- /pautas \(POST\)
-- /sessoes \(POST\)
-- /votos \(POST\)
-- /voto-resultado/pautas/{id_pauta} \(GET\)
+- /v1/associados \(POST\)
+- /v1/pautas \(POST\)
+- /v1/sessoes \(POST\)
+- /v1/votos \(POST\)
+- /v1/voto-resultado/pautas/{id_pauta} \(GET\)
 
 - /swagger-ui.html \(Documentação da API\)
 

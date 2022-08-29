@@ -22,7 +22,7 @@ import java.net.URI;
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Sql("/data/voto/import_data_for_voto_resultado_controller_test_2.sql")
-class VotoResultadoControllerTest {
+class VotoResultadoV1ControllerTest {
 
     private MockMvc mockMvc;
 
@@ -36,7 +36,7 @@ class VotoResultadoControllerTest {
 
     @Test
     void contabilizarVotoDePautaComSessaoFechadaRetorna200() throws Exception {
-        var uri = URI.create("/voto-resultado/pautas/1");
+        var uri = URI.create("/v1/voto-resultado/pautas/1");
 
         var responseContent = "{\"status\":\"resultado final\",\"SIM\":1,\"NAO\":2}";
 
@@ -48,7 +48,7 @@ class VotoResultadoControllerTest {
 
     @Test
     void contabilizarVotoDePautaComSessaoAbertaRetorna200() throws Exception {
-        var uri = URI.create("/voto-resultado/pautas/2");
+        var uri = URI.create("/v1/voto-resultado/pautas/2");
 
         var responseContent = "{\"status\":\"resultado parcial\",\"SIM\":3,\"NAO\":0}";
 

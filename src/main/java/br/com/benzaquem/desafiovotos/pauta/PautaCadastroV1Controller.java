@@ -16,18 +16,18 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 @AllArgsConstructor
-public class PautaCadastroController {
+public class PautaCadastroV1Controller {
 
     private PautaRepository pautaRepository;
 
 
-    @PostMapping(value = "/pautas", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/v1/pautas", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Void> cadastrarPauta(@RequestBody @Valid PautaRequest pautaRequest) {
         log.info("Iniciando cadastro de uma pauta, request = {}", pautaRequest);
         var pauta = pautaRequest.toModel();
         pauta = pautaRepository.save(pauta);
         log.info("Pauta cadastrada com sucesso, pauta = {}", pauta);
-        var uriResponse = ServletUriComponentsBuilder.fromCurrentContextPath().path("/pautas/{id}").buildAndExpand(pauta.getId()).toUri();
+        var uriResponse = ServletUriComponentsBuilder.fromCurrentContextPath().path("/v1/pautas/{id}").buildAndExpand(pauta.getId()).toUri();
         return ResponseEntity.created(uriResponse).build();
     }
 

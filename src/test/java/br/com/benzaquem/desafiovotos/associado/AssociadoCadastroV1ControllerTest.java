@@ -24,7 +24,7 @@ import java.net.URI;
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class AssociadoCadastroControllerTest {
+class AssociadoCadastroV1ControllerTest {
 
     private MockMvc mockMvc;
 
@@ -44,7 +44,7 @@ class AssociadoCadastroControllerTest {
                 "\"cpf\" :\"84115667818\"" +
                 "}";
 
-        var uri = new URI("/associados");
+        var uri = new URI("/v1/associados");
 
 
 
@@ -53,7 +53,7 @@ class AssociadoCadastroControllerTest {
                         .content(requestContent)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().string("Location", MatchesPattern.matchesPattern("http://localhost/associados/(\\d+)")));
+                .andExpect(MockMvcResultMatchers.header().string("Location", MatchesPattern.matchesPattern("http://localhost/v1/associados/(\\d+)")));
 
     }
 
@@ -68,7 +68,7 @@ class AssociadoCadastroControllerTest {
 
         var responseContent = "{\"campo\":\"cpf\",\"mensagem\":\"Documento já cadastrado, N° = 46960387000\"}";
 
-        var uri = new URI("/associados");
+        var uri = new URI("/v1/associados");
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(uri)
