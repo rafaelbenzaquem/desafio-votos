@@ -25,12 +25,10 @@ public class ExceptionsHandler {
 
 
     @ExceptionHandler(DocumentoDuplicadoException.class)
-    public ResponseEntity<MensagemCampoError> documentoDuplicadoExceptionHandler(DocumentoDuplicadoException ex) {
-
-        return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON_UTF8).body(MensagemCampoError.builder()
-                .campo("cpf")
-                .mensagem(ex.getMessage())
-                .build());
+    public ResponseEntity<MensagemValidatorResponse> documentoDuplicadoExceptionHandler(DocumentoDuplicadoException ex) {
+        MensagemValidatorResponse errorResponse = new MensagemValidatorResponse(HttpStatus.BAD_REQUEST.value(), "Erro de validação!", new ArrayList<>());
+            errorResponse.addMensagemCampoError("cpf",ex.getMessage());
+        return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON_UTF8).body(errorResponse);
     }
 
 }

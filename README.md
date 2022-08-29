@@ -2,14 +2,15 @@
 
 ## :speech_balloon:O que há neste documento
 1. [Missão deste projeto](./README.md#hammermissão-deste-projeto)
-2. [Executando testes unitários](./README.md#executando-testes-unitários)
-3. [Executando testes de integração](./README.md#executando-testes-de-integração)
-4. [Executando todos os testes](./README.md#executando-todos-os-testes)
-5. [Executando o projeto com Docker](./README.md#whaleexecutando-o-projeto-com-docker)
-6. [Executando o projeto localmente](./README.md#computerexecutando-o-projeto-localmente)
-7. [Endpoints disponíveis](./README.md#mag_rightendpoints-disponíveis)
+2. [Estrutura do projeto](./README.md#hammermissão-deste-projeto)
+3. [Executando testes unitários](./README.md#executando-testes-unitários)
+4. [Executando testes de integração](./README.md#executando-testes-de-integração)
+5. [Executando todos os testes](./README.md#executando-todos-os-testes)
+6. [Executando o projeto com Docker](./README.md#whaleexecutando-o-projeto-com-docker)
+7. [Executando o projeto localmente](./README.md#computerexecutando-o-projeto-localmente)
+8. [Endpoints disponíveis](./README.md#mag_rightendpoints-disponíveis)
 
-## :hammer:1 - Missão deste projeto
+## :hammer:Missão deste projeto
 
 No cooperativismo, cada associado possui um voto e as decisões são tomadas em assembleias, por votação. A partir disso, você precisa criar uma solução back-end para gerenciar essas sessões de votação. Essa solução deve ser executada na nuvem e promover as seguintes funcionalidades através de uma API REST:
 - Cadastrar uma nova pauta;
@@ -20,6 +21,20 @@ No cooperativismo, cada associado possui um voto e as decisões são tomadas em 
 Para fins de exercício, a segurança das interfaces pode ser abstraída e qualquer chamada para as interfaces pode ser considerada como autorizada. A escolha da linguagem, frameworks e bibliotecas é livre (desde que não infrinja direitos de uso).
 
 É importante que as pautas e os votos sejam persistidos e que não sejam perdidos com o restart da aplicação.
+
+## :rocket:Estrutura do projeto
+
+O projeto foi estruturado de maneira simples para facilitar o entendimento do leitor. Cada pacote principal representa um domínio da aplicação, uma alusão ao Domain Driven Design. Cada pacote principal pode conter subpacotes com funcionalidades, complementos ou componentes específicos do seu domínio.
+
+
+>- /desafio-votos		# raiz do projeto.
+>>-	/analise	        # pacote com serviço externo de análise de cpf.
+>>-	/associado	# pacote de classes para cadastro de associados.
+>>-	/commons	# pacote de classes comuns a todos os domínios.
+>>-	/pauta		# pacote de classes para cadastro de pautas.
+>>-	/sessão		# pacote de classes para criação de sessões.
+>>-	/voto		# pacotes de classes de serviços de votos e votação.
+
 
 ## Executando testes unitários
 
