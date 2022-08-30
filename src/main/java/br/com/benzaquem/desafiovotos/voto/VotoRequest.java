@@ -7,7 +7,10 @@ import br.com.benzaquem.desafiovotos.pauta.Pauta;
 import br.com.benzaquem.desafiovotos.sessao.Sessao;
 import br.com.benzaquem.desafiovotos.voto.model.OpcaoVoto;
 import br.com.benzaquem.desafiovotos.voto.model.Voto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDateTime;
 
 public class VotoRequest {
 
@@ -24,8 +27,11 @@ public class VotoRequest {
             values = {"SIM", "NÃO", "NAO"},
             ignoreCase = true)
     private String opcao;
+    @JsonIgnore
+    private final LocalDateTime horaDoVoto;
 
     public VotoRequest() {
+        horaDoVoto = LocalDateTime.now();
     }
 
     public Long getIdAssociado() {
@@ -40,7 +46,21 @@ public class VotoRequest {
         return opcao;
     }
 
+    public LocalDateTime getHoraDoVoto() {
+        return horaDoVoto;
+    }
+
     public Voto toModel(Associado associado, Sessao sessao) {
-        return Voto.of(associado, sessao, OpcaoVoto.of(getOpcao()));
+        return Voto.of(associado, sessao, OpcaoVoto.of(getOpcao()), horaDoVoto);
+    }
+
+    @Override
+    public String toString() {
+        return "VotoRequest{" +
+                "idAssociado=" + idAssociado +
+                ", idPauta=" + idPauta +
+                ", opcao='" + opcao + '\'' +
+                ", horaDoVoto=" + horaDoVoto +
+                '}';
     }
 }

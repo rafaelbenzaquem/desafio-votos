@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS voto
     associado_id       bigint NOT NULL,
     sessao_id          bigint NOT NULL,
     opcao     varchar(255) DEFAULT NULL,
+    hora_do_voto        datetime,
     PRIMARY KEY (associado_id,sessao_id),
     FOREIGN KEY (associado_id) REFERENCES associado (id),
     FOREIGN KEY (sessao_id) REFERENCES sessao (id)

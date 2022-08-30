@@ -46,7 +46,7 @@ public class AssociadoCadastroV1Controller {
         boolean existsCpf = associadoRepository.existsAssociadoByCpf(associadoResquest.getCpf());
         if (existsCpf) {
             log.warn("Documento já cadastrado, N° = " + ofuscaCpf(associadoResquest.getCpf()));
-            throw new DocumentoDuplicadoException("Documento já cadastrado, N° = " + associadoResquest.getCpf());
+            throw new DocumentoDuplicadoException("Documento já cadastrado, N° = " + ofuscaCpf(associadoResquest.getCpf()));
         }
 
         var associado = associadoResquest.toModel();

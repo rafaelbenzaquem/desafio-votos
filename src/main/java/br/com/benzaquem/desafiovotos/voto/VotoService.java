@@ -28,10 +28,11 @@ public class VotoService {
     @Autowired
     private VotoRepository votoRepository;
 
-    public Mensagem votarPauta(VotoRequest votoRequest, LocalDateTime horaDoVoto) {
+    public Mensagem votarPauta(VotoRequest votoRequest) {
 
         var idAssociado = votoRequest.getIdAssociado();
         var idPauta = votoRequest.getIdPauta();
+        var horaDoVoto = votoRequest.getHoraDoVoto();
 
         var optAssociado = associadoRepository.findById(idAssociado);
         var associado = optAssociado.orElseThrow(() -> {
@@ -47,7 +48,7 @@ public class VotoService {
 
         var optSessao = sessaoVotacaoRepository.buscarUltimaSessaoAbertaPorPauta(idPauta, horaDoVoto);
         if (optSessao.isPresent()) {
-            if (votoRepository.findVotoByAssociadoAndPauta(idAssociado, idPauta).isPresent()) {
+            if (votoRepository.existsVotoByAssociadoAndPauta(idAssociado, idPauta)) {
                 log.warn("Não é possível votar mais de uma vez em uma mesma pauta. Associado - {} - pauta - {}", idAssociado, idPauta);
                 return new Mensagem(HttpStatus.BAD_REQUEST.value(), "Não é possível votar mais de uma vez na mesma pauta.");
             }

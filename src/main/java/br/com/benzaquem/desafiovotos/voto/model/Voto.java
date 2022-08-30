@@ -25,9 +25,10 @@ public class Voto {
     public Voto() {
     }
 
-    public Voto(VotoPk id, OpcaoVoto opcao) {
+    public Voto(VotoPk id, OpcaoVoto opcao, LocalDateTime horaDoVoto) {
         this.id = id;
         this.opcao = opcao;
+        this.horaDoVoto = horaDoVoto;
     }
 
     public VotoPk getId() {
@@ -36,6 +37,10 @@ public class Voto {
 
     public OpcaoVoto getOpcao() {
         return opcao;
+    }
+
+    public LocalDateTime getHoraDoVoto() {
+        return horaDoVoto;
     }
 
     @Override
@@ -51,14 +56,16 @@ public class Voto {
         return Objects.hash(id);
     }
 
-    public static Voto of(Associado associado, Sessao sessao, OpcaoVoto opcao){
-        return new Voto(VotoPk.of(associado,sessao),opcao);
+    public static Voto of(Associado associado, Sessao sessao, OpcaoVoto opcao, LocalDateTime horaDoVoto) {
+        return new Voto(VotoPk.of(associado, sessao), opcao, horaDoVoto);
     }
 
     @Override
     public String toString() {
-        return "Voto{"+ id +
-                ", opcao=" + opcao +
+        return "Voto{" +
+                "id=" + id +
+                ", opcao=" + getOpcao() +
+                ", horaDoVoto=" + getHoraDoVoto() +
                 '}';
     }
 }

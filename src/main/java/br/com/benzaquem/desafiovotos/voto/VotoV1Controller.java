@@ -23,9 +23,8 @@ public class VotoV1Controller {
     @PostMapping(value = "/votos", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Mensagem> votarPauta(@RequestBody @Valid VotoRequest votoRequest) {
         log.info("Iniciando processamento de voto, request = {}", votoRequest);
-        var horaDoVoto = LocalDateTime.now();
 
-        Mensagem resposta = votoService.votarPauta(votoRequest, horaDoVoto);
+        Mensagem resposta = votoService.votarPauta(votoRequest);
 
         return ResponseEntity.status(resposta.status()).body(resposta);
     }

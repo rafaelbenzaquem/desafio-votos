@@ -1,33 +1,36 @@
 version: '3'
 
 services:
-   app:
+   app-desafio-votos:
       build:
          dockerfile: ./dockerfile
          context: .
       image: rafaelbenz/desafio-votos
       restart: on-failure
-      container_name: app-desafio-votos
       ports:
          - 8080:8080
+      environment:
+         BANCO_URL: jdbc:mysql://mysql-desafio-votos:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED
       depends_on:
-         - db
+         - mysql-desafio-votos
       networks:
-         - desafio-network
+         - desafio-votos-network
 
-   db:
+   mysql-desafio-votos:
       image: mysql:latest
       command: --default-authentication-plugin=mysql_native_password
       restart: always
+      container_name: mysql-votos
       ports:
          - 3306:3306
-      environment:   
-         MYSQL_ROOT_PASSWORD: 123456
+      environment:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: desafio_votos_db
       volumes:
          - mysql-desafio-votos-volume:/var/lib/mysql
       networks:
          - desafio-votos-network
-   
+
    db_admin:
       image: adminer:latest
       restart: always
@@ -35,13 +38,13 @@ services:
          - 8085:8080
       networks:
          - desafio-votos-network
-   
-   logging:
+
+   splunk:
       image: splunk/splunk:latest
       restart: always
       environment:
          SPLUNK_START_ARGS: --accept-license
-         SPLUNK_PASSWORD: "votoslog"
+         SPLUNK_PASSWORD: "splunk123"
       ports:
          - 8000:8000
          - 8088:8088
@@ -52,5 +55,5 @@ networks:
    desafio-votos-network:
       driver: bridge
 volumes:
-   - mysql-desafio-votos-volume:
+   mysql-desafio-votos-volume:
       
