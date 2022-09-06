@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property resource="application.yaml"/>
-    <contextName>desafio-votos</contextName>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+
+    <appender name="CONSOLE" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+        <url>${SPLUNK_URL:-http:localhost:8088}</url>
+        <token>${SPLUNK_TOKEN}</token>
+        <disableCertificateValidation>true</disableCertificateValidation>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} - %msg %n
             </pattern>
-        </encoder>
+        </layout>
     </appender>
 
     <root level="INFO">

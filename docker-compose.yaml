@@ -1,59 +1,93 @@
-version: '3'
+version: '3.6'
 
 services:
-   app-desafio-votos:
+   spring-app-desafio-votos:
       build:
          dockerfile: ./dockerfile
          context: .
       image: rafaelbenz/desafio-votos
       restart: on-failure
+      container_name: spring-app-desafio-votos
       ports:
-         - 8080:8080
+         - "8080:8080"
       environment:
-         BANCO_URL: jdbc:mysql://mysql-desafio-votos:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED
+         BANCO_URL: jdbc:mysql://mysql-db-desafio-votos:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED
+         SPLUNK_URL: http://gateway.docker.internal:8088
+         SPLUNK_TOKEN: "9bfffd3b-d130-45f9-9f5f-a54d801d80d2"
       depends_on:
-         - mysql-desafio-votos
+         - mysql-db-desafio-votos
+         - splunk-desafio-votos
       networks:
          - desafio-votos-network
+      extra_hosts:
+         - "host.docker.internal:host-gateway"
 
-   mysql-desafio-votos:
+   mysql-db-desafio-votos:
       image: mysql:latest
       command: --default-authentication-plugin=mysql_native_password
       restart: always
-      container_name: mysql-votos
+      container_name: mysql-db-desafio-votos
       ports:
-         - 3306:3306
+         - "3306:3306"
       environment:
           MYSQL_ROOT_PASSWORD: 123456
           MYSQL_DATABASE: desafio_votos_db
       volumes:
-         - mysql-desafio-votos-volume:/var/lib/mysql
+         - volume-mysql-desafio-votos:/var/lib/mysql
       networks:
          - desafio-votos-network
+      extra_hosts:
+         - "host.docker.internal:host-gateway"
 
-   db_admin:
+   adminer-desafio-votos:
       image: adminer:latest
       restart: always
+      container_name: adminer-desafio-votos
       ports:
-         - 8085:8080
+         - "8085:8080"
       networks:
          - desafio-votos-network
+      extra_hosts:
+         - "host.docker.internal:host-gateway"
 
-   splunk:
+   splunk-desafio-votos:
       image: splunk/splunk:latest
       restart: always
+      container_name: splunk-desafio-votos
       environment:
          SPLUNK_START_ARGS: --accept-license
+         SPLUNK_STANDALONE_URL: splunk-desafio-votos
          SPLUNK_PASSWORD: "splunk123"
       ports:
-         - 8000:8000
-         - 8088:8088
+         - "8000:8000"
+         - "8088:8088"
       networks:
-         - desafio-votos-network
+         desafio-votos-network:
+            aliases:
+               - splunk-desafio-votos
+      extra_hosts:
+         - "host.docker.internal:host-gateway"
+#   uf1:
+#      networks:
+#         desafio-votos-network:
+#            aliases:
+#               - uf1
+#      image: splunk/universalforwarder:latest
+#      hostname: uf1
+#      container_name: uf1
+#      environment:
+#         - SPLUNK_START_ARGS=--accept-license
+#         - SPLUNK_STANDALONE_URL=splunk-desafio-votos
+#         - SPLUNK_ADD=udp 1514,monitor /var/log/*
+#         - SPLUNK_PASSWORD="splunk123"
+#      ports:
+#         - "8088:8088"
 
 networks:
    desafio-votos-network:
       driver: bridge
+      attachable: true
+
 volumes:
-   mysql-desafio-votos-volume:
+   volume-mysql-desafio-votos:
       
