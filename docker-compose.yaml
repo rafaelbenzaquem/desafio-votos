@@ -13,7 +13,7 @@ services:
       environment:
          BANCO_URL: jdbc:mysql://mysql-db-desafio-votos:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED
          SPLUNK_URL: http://gateway.docker.internal:8088
-         SPLUNK_TOKEN: "9bfffd3b-d130-45f9-9f5f-a54d801d80d2"
+         SPLUNK_TOKEN: 9bfffd3b-d130-45f9-9f5f-a54d801d80d2
       depends_on:
          - mysql-db-desafio-votos
          - splunk-desafio-votos

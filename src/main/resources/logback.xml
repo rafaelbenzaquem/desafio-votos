@@ -2,8 +2,8 @@
 <configuration>
 
     <appender name="CONSOLE" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
-        <url>${SPLUNK_URL:-http:localhost:8088}</url>
-        <token>${SPLUNK_TOKEN}</token>
+        <url>${SPLUNK_URL:-http://localhost:8088}</url>
+        <token>${SPLUNK_TOKEN:-9bfffd3b-d130-45f9-9f5f-a54d801d80d2}</token>
         <disableCertificateValidation>true</disableCertificateValidation>
 
         <layout class="ch.qos.logback.classic.PatternLayout">
