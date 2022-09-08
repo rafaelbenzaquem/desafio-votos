@@ -116,7 +116,7 @@ mvnw.cmd spring-boot:run
 
 Após o 'clean install' para acessar o relatório de cobertura de testes, abra no navegador o arquivo  './target/site/jacoco/index.html'.
 
-![img.png](img/jacoco.png)
+![img.png](img/jacoco/jacoco.png)
 
 ou acesse..
 - [Relatório de testes com Jacoco ](http://localhost:63342/desafio-votos/target/site/jacoco/index.html)

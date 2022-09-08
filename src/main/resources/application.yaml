@@ -15,6 +15,16 @@ spring:
     username: ${BANCO_USER:root}
     password: ${MYSQL_ROOT_PASSWORD:123456}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  kafka:
+    bootstrap-servers: ${BSS_URL:localhost:9092}
+
+topico:
+  nome: ${NOME_TOPICO:resultados-votacao}
+  fator-de-replicacao: ${FATOR_REPLICACAO:1}
+  num-particoes: ${NUM_PARTICOES:3}
+
+thread-pool:
+  size: ${THREAD_POOL_SIZE:10}
 
 analise:
   voto:

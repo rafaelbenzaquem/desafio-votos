@@ -3,6 +3,7 @@ package br.com.benzaquem.desafiovotos.sessao;
 
 import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemResponseError;
 import br.com.benzaquem.desafiovotos.pauta.PautaRepository;
+import br.com.benzaquem.desafiovotos.resultado.ResultadoVotacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,11 +14,18 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,6 +36,10 @@ public class SessaoVotacaoV1Controller {
     private SessaoVotacaoRepository sessaoVotacaoRepository;
 
     private PautaRepository pautaRepository;
+
+    private ResultadoVotacaoService resultadoVotacaoService;
+
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     @Operation(summary = "Inicia uma nova sessão de votação")
     @ApiResponses(value = {
@@ -44,8 +56,15 @@ public class SessaoVotacaoV1Controller {
         var optPauta = pautaRepository.findById(idPauta);
 
         if (optPauta.isPresent()) {
-            var sessao = sessaoRequest.toModel(optPauta.get());
+            var pauta = optPauta.get();
+            var sessao = sessaoRequest.toModel(pauta);
             sessao = sessaoVotacaoRepository.save(sessao);
+
+            var ldt = sessao.getFim();
+            var date = Date.from(Timestamp.valueOf(ldt).toInstant());
+            log.info("Agendando mensagem para {}", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(date));
+            threadPoolTaskScheduler.schedule(new RunnableTask(pauta.getId(), resultadoVotacaoService), date);
+
             log.info("Sessão iniciada com sucesso, sessão id = {}", sessao.getId());
             var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/v1/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
