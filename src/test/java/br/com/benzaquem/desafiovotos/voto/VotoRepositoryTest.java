@@ -29,8 +29,11 @@ class VotoRepositoryTest {
     @Test
     @Sql({"/data/voto/import_data_for_voto_repository_test.sql"})
     void verificaSeExisteVotoDeAssociadoEmUmaPautaTest() {
-        var exist = votoRepository.existsVotoByAssociadoAndPauta(2L, 1L);
-        assertTrue(exist);
+        var existA = votoRepository.existsVotoByAssociadoAndPauta(2L, 1L);
+        assertTrue(existA);
+
+        var existB = votoRepository.existsVotoByAssociadoAndPauta(1L, 2L);
+        assertFalse(existB);
     }
 
     @Test
