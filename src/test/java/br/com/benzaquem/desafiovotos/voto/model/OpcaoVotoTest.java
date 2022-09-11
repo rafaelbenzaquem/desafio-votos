@@ -23,6 +23,11 @@ class OpcaoVotoTest {
 
         assertThrows(OpcaoVotoInvalidoException.class, () -> OpcaoVoto.of("talvez"), "Opção de voto inválida!");
 
+        try {
+            OpcaoVoto.of("talvez");
+        }catch(OpcaoVotoInvalidoException ex){
+            assertEquals("talvez", ex.getValor());
+        }
     }
 
 }

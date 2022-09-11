@@ -1,7 +1,7 @@
 package br.com.benzaquem.desafiovotos.pauta;
 
 
-import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemResponseError;
+import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemErroDeValidacaoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +35,7 @@ public class PautaCadastroV1Controller {
                             description = "Referência para nova pauta criada. Ex.: ./v1/pautas/{id_pauta}")),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = {@Content(mediaType = "application/json;charset=UTF-8",
-                            schema = @Schema(implementation = MensagemResponseError.class))})})
+                            schema = @Schema(implementation = MensagemErroDeValidacaoResponse.class))})})
     @PostMapping(value = "/v1/pautas", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Void> cadastrarPauta(@RequestBody @Valid PautaRequest pautaRequest) {
         log.info("Iniciando cadastro de uma pauta, request = {}", pautaRequest);

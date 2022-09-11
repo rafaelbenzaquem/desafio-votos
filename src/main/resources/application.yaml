@@ -9,14 +9,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-    defer-datasource-initialization: true
   datasource:
     url: ${BANCO_URL:jdbc:mysql://localhost:3306/desafio_votos_db?allowPublicKeyRetrieval=true&sslMode=DISABLED}
     username: ${BANCO_USER:root}
     password: ${MYSQL_ROOT_PASSWORD:123456}
     driver-class-name: com.mysql.cj.jdbc.Driver
   kafka:
-    bootstrap-servers: ${BSS_URL:localhost:9092}
+    bootstrap-servers: ${KAFKA_BSS_URL:localhost:9092}
+
 
 topico:
   nome: ${NOME_TOPICO:resultados-votacao}

@@ -5,11 +5,19 @@ spring:
     password:
     driver-class-name: org.h2.Driver
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-
-    defer-datasource-initialization: true
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: desafio-test
+test:
+  topic: embedded-test-topic
+topico:
+  nome: topico-test
+  fator-de-replicacao: 1
+  num-particoes: 1

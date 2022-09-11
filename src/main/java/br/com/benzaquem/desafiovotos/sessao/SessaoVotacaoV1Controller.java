@@ -1,9 +1,9 @@
 package br.com.benzaquem.desafiovotos.sessao;
 
 
-import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemResponseError;
+import br.com.benzaquem.desafiovotos.commons.mensagem.MensagemErroDeValidacaoResponse;
 import br.com.benzaquem.desafiovotos.pauta.PautaRepository;
-import br.com.benzaquem.desafiovotos.resultado.ResultadoVotacaoService;
+import br.com.benzaquem.desafiovotos.resultado.ResultadoVotacaoPublisher;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,13 +33,14 @@ import java.util.Date;
 @RequestMapping("/v1/sessoes")
 public class SessaoVotacaoV1Controller {
 
-    private SessaoVotacaoRepository sessaoVotacaoRepository;
+    private final SessaoVotacaoRepository sessaoVotacaoRepository;
 
-    private PautaRepository pautaRepository;
+    private final PautaRepository pautaRepository;
 
-    private ResultadoVotacaoService resultadoVotacaoService;
+    private final ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
-    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+    private final ResultadoVotacaoPublisher resultadoVotacaoPublisher;
+
 
     @Operation(summary = "Inicia uma nova sessão de votação")
     @ApiResponses(value = {
@@ -48,7 +49,7 @@ public class SessaoVotacaoV1Controller {
                             description = "Referência para nova nova sessão  iniciada. Ex.: ./v1/sessoes/{id_associado}")),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = {@Content(mediaType = "application/json;charset=UTF-8",
-                            schema = @Schema(implementation = MensagemResponseError.class))})})
+                            schema = @Schema(implementation = MensagemErroDeValidacaoResponse.class))})})
     @PostMapping(produces = "application/json;charset=UTF-8")
     public ResponseEntity<?> abrirSessaoVotacao(@RequestBody @Valid SessaoRequest sessaoRequest) {
         log.info("Iniciando uma sessão de votação, request = {}", sessaoRequest);
@@ -62,15 +63,15 @@ public class SessaoVotacaoV1Controller {
 
             var ldt = sessao.getFim();
             var date = Date.from(Timestamp.valueOf(ldt).toInstant());
-            log.info("Agendando mensagem para {}", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(date));
-            threadPoolTaskScheduler.schedule(new RunnableTask(pauta.getId(), resultadoVotacaoService), date);
+            log.info("Agendando evento de encerramento da sessão id = {} para {}", sessao.getId(), new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(date));
+            threadPoolTaskScheduler.schedule(new SessaoEncerradaRunnableTask(pauta.getId(), resultadoVotacaoPublisher), date);
 
             log.info("Sessão iniciada com sucesso, sessão id = {}", sessao.getId());
             var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/v1/sessoes/{id}").buildAndExpand(sessao.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }
         log.warn("Não foi possível iniciar sessão , não foi possível encotrar pauta id = {}", idPauta);
-        MensagemResponseError errorResponse = new MensagemResponseError(HttpStatus.NOT_FOUND.value(), "Recurso não encontrado!", new ArrayList<>());
+        MensagemErroDeValidacaoResponse errorResponse = new MensagemErroDeValidacaoResponse(HttpStatus.NOT_FOUND.value(), "Recurso não encontrado!", new ArrayList<>());
         errorResponse.addMensagemCampoError("id_pauta", String.format("Pauta id = %s não existe.", idPauta));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
