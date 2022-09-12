@@ -38,7 +38,7 @@ class ResultadoVotacaoV1ControllerTest {
     void contabilizarVotoDePautaComSessaoFechadaRetorna200() throws Exception {
         var uri = URI.create("/v1/voto-resultado/pautas/1");
 
-        var responseContent = "{\"status\":\"resultado final\",\"SIM\":1,\"NAO\":2}";
+        var responseContent = "{\"id_pauta\":1,\"SIM\":1,\"NAO\":2,\"status\":\"resultado final\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.get(uri))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -50,7 +50,7 @@ class ResultadoVotacaoV1ControllerTest {
     void contabilizarVotoDePautaComSessaoAbertaRetorna200() throws Exception {
         var uri = URI.create("/v1/voto-resultado/pautas/2");
 
-        var responseContent = "{\"status\":\"resultado parcial\",\"SIM\":3,\"NAO\":0}";
+        var responseContent = "{\"id_pauta\":2,\"SIM\":3,\"NAO\":0,\"status\":\"resultado parcial\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.get(uri))
                 .andExpect(MockMvcResultMatchers.status().isOk())

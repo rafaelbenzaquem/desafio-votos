@@ -48,10 +48,11 @@ public class Pauta {
 
     @Override
     public String toString() {
-        return "Pauta{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sessoes=" + sessoes +
-                '}';
+        return """
+                {
+                    "id" : "%d",
+                    "nome" : "%s"
+                }
+                """.formatted(id, nome);
     }
 }

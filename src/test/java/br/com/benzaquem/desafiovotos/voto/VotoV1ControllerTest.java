@@ -3,6 +3,9 @@ package br.com.benzaquem.desafiovotos.voto;
 
 import br.com.benzaquem.desafiovotos.analise.AnaliseCpfExternalService;
 import br.com.benzaquem.desafiovotos.analise.AnaliseCpfResponse;
+import br.com.benzaquem.desafiovotos.util.FeignExceptionForTests;
+import feign.FeignException;
+import feign.Request;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URI;
+import java.util.Collection;
+import java.util.Map;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -116,6 +121,23 @@ class VotoV1ControllerTest {
         mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @SneakyThrows
+    @Test
+    void votarPautaErroNoServicoExterno() {
+        var requestContent = "{" +
+                "\"id_pauta\":2," +
+                "\"id_associado\":1," +
+                "\"opcao\":\"SIM\"" +
+                "}";
+
+
+        Mockito.when(analiseCpfExternalService.solicitarAnaliseVotoPorCpf(Mockito.anyString())).thenThrow(new FeignExceptionForTests(400,"teste"));
+
+
+        var responseContent = "{\"status\":400,\"erro\":\"Erro de serviço externo!\",\"mensagem\":\"teste\"}";
+
+        mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isBadRequest());
+    }
 
     @SneakyThrows
     @Test
@@ -141,6 +163,21 @@ class VotoV1ControllerTest {
                 "}";
         System.out.println(requestContent);
         var responseContent = "{\"status\":400,\"mensagem\":\"Erro de validação!\",\"campos\":[{\"campo\":\"id_pauta\",\"mensagem\":\"Não existe um valor cadastrado na base de dados.\"}]}";
+
+        mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isBadRequest());
+    }
+
+
+    @SneakyThrows
+    @Test
+    void votarEmPautaValidaComClienteValidoOpcaoInvalidaRetorna400() {
+        var requestContent = "{" +
+                "\"id_pauta\":1," +
+                "\"id_associado\":1," +
+                "\"opcao\":\"talvez\"" +
+                "}";
+        System.out.println(requestContent);
+        var responseContent = "{\"status\":400,\"mensagem\":\"Erro de validação!\",\"campos\":[{\"campo\":\"opcao\",\"mensagem\":\"Opção escolhida é inválida, escolha['sim','não']\"}]}";
 
         mockMvcVotosTest(requestContent, responseContent, MockMvcResultMatchers.status().isBadRequest());
     }
