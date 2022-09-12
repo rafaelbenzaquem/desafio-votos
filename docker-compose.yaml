@@ -1,7 +1,15 @@
 version: '3.6'
 
+networks:
+   network-desafio-votos:
+      driver: bridge
+      attachable: true
+
+volumes:
+   volume-mysql-desafio-votos:
+
 services:
-   spring-app-desafio-votos:
+   springapp:
       build:
          dockerfile: ./dockerfile
          context: .
@@ -16,14 +24,12 @@ services:
          SPLUNK_TOKEN: 1d2e47dc-5ec1-4300-9e41-9c38375022f2
          KAFKA_BSS_URL: http://kafka:29092
       depends_on:
-         - mysql-db-desafio-votos
+         - mysqldb
          - splunk-desafio-votos
       networks:
          - network-desafio-votos
-      extra_hosts:
-         - "host.docker.internal:host-gateway"
 
-   mysql-db-desafio-votos:
+   mysqldb:
       image: mysql:latest
       command: --default-authentication-plugin=mysql_native_password
       restart: always
@@ -37,10 +43,8 @@ services:
          - volume-mysql-desafio-votos:/var/lib/mysql
       networks:
          - network-desafio-votos
-#      extra_hosts:
-#         - "host.docker.internal:host-gateway"
 
-   adminer-desafio-votos:
+   adminer:
       image: adminer:latest
       restart: always
       hostname: adminer
@@ -48,10 +52,8 @@ services:
          - "8085:8080"
       networks:
          - network-desafio-votos
-#      extra_hosts:
-#         - "host.docker.internal:host-gateway"
 
-   splunk-desafio-votos:
+   splunk:
       image: splunk/splunk:latest
       restart: always
       hostname: splunk
@@ -64,26 +66,8 @@ services:
          - "8088:8088"
       networks:
          - network-desafio-votos
-#      extra_hosts:
-#         - "host.docker.internal:host-gateway"
 
-#   uf1:
-#      networks:
-#         network-desafio-votos:
-#            aliases:
-#               - uf1
-#      image: splunk/universalforwarder:latest
-#      hostname: uf1
-#      container_name: uf1
-#      environment:
-#         - SPLUNK_START_ARGS=--accept-license
-#         - SPLUNK_STANDALONE_URL=splunk-desafio-votos
-#         - SPLUNK_ADD=udp 1514,monitor /var/log/*
-#         - SPLUNK_PASSWORD="splunk123"
-#      ports:
-#         - "8088:8088"
-
-   zookeeper-desafio-votos:
+   zookeeper:
       hostname: zookeeper
       image: "confluentinc/cp-zookeeper:latest"
       environment:
@@ -92,17 +76,15 @@ services:
          ZOOKEEPER_SYNC_LIMIT: 2
       networks:
          - network-desafio-votos
-#      extra_hosts:
-#         - "host.docker.internal:host-gateway"
 
-   kafka-desafio-votos:
+   kafka:
       hostname: kafka
       image: "confluentinc/cp-kafka:latest"
       restart: on-failure
       ports:
          - "9092:9092"
       depends_on:
-         - zookeeper-desafio-votos
+         - zookeeper
       environment:
          KAFKA_BROKER_ID: 1
          KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
@@ -112,14 +94,20 @@ services:
          KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       networks:
          - network-desafio-votos
-#      extra_hosts:
-#         - "host.docker.internal:host-gateway"
+#  uf1:
+#     networks:
+#        network-desafio-votos:
+#           aliases:
+#              - uf1
+#     image: splunk/universalforwarder:latest
+#     hostname: uf1
+#     container_name: uf1
+#     environment:
+#        - SPLUNK_START_ARGS=--accept-license
+#        - SPLUNK_STANDALONE_URL=splunk-desafio-votos
+#        - SPLUNK_ADD=udp 1514,monitor /var/log/*
+#        - SPLUNK_PASSWORD="splunk123"
+#     ports:
+#        - "8088:8088"
 
-networks:
-   network-desafio-votos:
-      driver: bridge
-      attachable: true
-
-volumes:
-   volume-mysql-desafio-votos:
       
